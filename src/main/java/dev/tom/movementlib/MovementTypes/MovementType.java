@@ -13,9 +13,16 @@ public abstract class MovementType {
     private double duration;
 
     public MovementType(Player player,  Location location){
-        this.start = new Location(player.getWorld(), 0, 0 ,0);
+        this.start = player.getLocation();
         this.player = player;
         this.destination = location;
+        this.duration = 1.0;
+    }
+
+    public MovementType(Player player, Location start,  Location destination){
+        this.start = start;
+        this.player = player;
+        this.destination = destination;
         this.duration = 1.0;
     }
 

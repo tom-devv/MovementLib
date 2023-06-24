@@ -16,10 +16,15 @@ public class Bounce extends MovementType {
         super(player, loc);
     }
 
+    public Bounce(Player player, Location start, Location end) {
+        super(player, start, end);
+    }
+
     @Override
     public void path() {
         Entity entity = getEntity();
         entity.teleport(getStart());
+//        entity.addPassenger(getPlayer());
         double step = getStart().getZ() > getDestination().getZ() ? -0.5 : 0.5;
 
         /*
@@ -40,20 +45,29 @@ public class Bounce extends MovementType {
         double shift = yAtX * -1;
 
         new BukkitRunnable(){
+            int count = 0;
             double x = 0;
             @Override
             public void run() {
-                double y = f(x) + shift;
+                double y = f(x - root) + shift;
+                System.out.println(entity.getLocation().getY());
+                entity.removePassenger(getPlayer());
                 entity.teleport(
                         new Location(
                                 entity.getWorld(),
-                                0.0 ,y,
-                                // If we did not shift by the same value as the root, we would start at x = 0, which means half of the curve would already be behind us
-                                x + root
+                                0.0 ,y + getStart().getY(),
+                                x
                         )
                 );
+                // The entity has returned back to y = 0, so it must be at the other root, so its journey has ended
+                if(y < 0 && count > 1) {
+                    entity.remove();
+                    this.cancel();
+                }
+                entity.addPassenger(getPlayer());
                 x = x + (step);
-                if(x > 100) this.cancel();
+                count++;
+                if(count > 200) this.cancel();
             }
 
 
@@ -62,7 +76,7 @@ public class Bounce extends MovementType {
     }
 
     private double f(double x){
-        return -(Math.pow(x, 2)) / 10;
+        return -(Math.pow(x, 2)) / 50;
     }
 
 

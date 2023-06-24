@@ -13,7 +13,7 @@ public abstract class MovementType {
     private double duration;
 
     public MovementType(Player player,  Location location){
-        this.start = player.getLocation();
+        this.start = new Location(player.getWorld(), 0, 0 ,0);
         this.player = player;
         this.destination = location;
         this.duration = 1.0;
@@ -28,7 +28,7 @@ public abstract class MovementType {
 
     public Entity getEntity (){
         ArmorStand armorStand = getStart().getWorld().spawn(getStart(), ArmorStand.class);
-        armorStand.setInvisible(true);
+//        armorStand.setInvisible(true);
 //        armorStand.setInvulnerable(true);
         armorStand.setGravity(false);
 //        armorStand.setMarker(true);
@@ -36,15 +36,15 @@ public abstract class MovementType {
     }
 
     public double getDeltaX(){
-        return getStart().getBlockX() - getDestination().getBlockX();
+        return getDestination().getBlockX() - getStart().getBlockX();
     }
 
     public double getDeltaY(){
-        return getStart().getBlockY() - getDestination().getBlockY();
+        return getDestination().getBlockY() - getStart().getBlockY() ;
     }
 
     public double getDeltaZ(){
-        return getStart().getBlockZ() - getDestination().getBlockZ();
+        return  getDestination().getBlockZ() - getStart().getBlockZ();
     }
 
 

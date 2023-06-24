@@ -25,10 +25,19 @@ public final class MovementLib extends JavaPlugin implements Listener {
     @EventHandler
     public void aa(PlayerInteractEvent e){
         if(e.getPlayer().getItemInHand().getType().equals(Material.BONE)){
-            Location location = e.getPlayer().getLocation();
-            Location endingLocation = location.add(0,0,10);
-            Bounce bounce = new Bounce(e.getPlayer(), endingLocation);
-            bounce.path();
+            Location endingLocation = new Location(e.getPlayer().getWorld(), 0 , 0 , -10);
+
+            new Bounce(e.getPlayer(), endingLocation).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,10)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,20)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,30)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,40)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,-10)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,-20)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,-30)).path();
+            new Bounce(e.getPlayer(), endingLocation.add(0,0,-40)).path();
+
+
         }
     }
 

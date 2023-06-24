@@ -1,0 +1,4 @@
+name: MovementLib
+version: '${project.version}'
+main: dev.tom.movementlib.MovementLib
+api-version: '1.19'
